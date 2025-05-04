@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import ActionButton from "@/components/ActionButton";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -12,7 +11,7 @@ const Index = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   
   useEffect(() => {
-    // Track the purchase event when page loads
+    // Track the ViewContent event when page loads
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'ViewContent', {
         content_name: 'Receitas Patrícia Mancini',
@@ -37,21 +36,27 @@ const Index = () => {
   }, []);
 
   const handleAccept = () => {
+    // Track InitiateCheckout event instead of Purchase
     if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'Purchase', {
+      (window as any).fbq('track', 'InitiateCheckout', {
+        content_name: 'Receitas Patrícia Mancini',
         value: 29.90,
         currency: 'BRL'
       });
     }
-    window.location.href = "https://pay.kiwify.com.br"; // Placeholder checkout URL
+    // Redirect to payment page
+    window.location.href = "https://pay.cakto.com.br/exkjnuv_371782";
   };
   
   const handleDecline = () => {
-    toast({
-      title: "Não vá embora agora!",
-      description: "Essa oferta é por tempo MUITO limitado e não estará mais disponível.",
-      variant: "destructive"
-    });
+    // Track Lead event
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'Lead', {
+        content_name: 'Receitas Patrícia Mancini - Recusou Oferta'
+      });
+    }
+    // Redirect to specified URL
+    window.location.href = "https://patriciamancini-1600receitas.netlify.app/";
   };
 
   return (
