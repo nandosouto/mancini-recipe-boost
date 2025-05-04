@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 const Index = () => {
   const { toast } = useToast();
   const [visitorCount, setVisitorCount] = useState(42);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   useEffect(() => {
     // Track the purchase event when page loads
@@ -61,7 +62,12 @@ const Index = () => {
           <img 
             src="https://i.ibb.co/ZzNFXnFX/smiling-young-woman-holding-fresh-baked-cupcake-tray-23-2148027988-removebg-preview.png" 
             alt="Chef Patrícia Mancini" 
-            className="w-40 h-40 object-cover md:w-56 md:h-56"
+            className={`w-40 h-40 object-cover md:w-56 md:h-56 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transition: 'opacity 0.3s' }}
+            onLoad={() => setImageLoaded(true)}
+            loading="eager"
+            width="224"
+            height="224"
             onError={(e) => {
               // Fallback if image doesn't load
               const target = e.target as HTMLImageElement;
